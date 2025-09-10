@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Dashboard | Wiseworx Digital</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <header class="header">
+    <div class="container">
+      <div class="logo">
+        <object data="images/logo.svg" type="image/svg+xml" width="180"></object>
+      </div>
+      <nav class="nav">
+        <a href="index.html">Home</a>
+        <a href="dashboard.html" class="active">Dashboard</a>
+        <a href="logout.html">Logout</a>
+      </nav>
+    </div>
+  </header>
+
+  <section class="hero" style="padding:100px 0;text-align:center;">
+    <div class="container">
+      <h1>Your Account</h1>
+      <p class="tagline">Manage your subscription and access your content.</p>
+    </div>
+  </section>
+
+  <section class="services" style="padding:80px 0;">
+    <div class="container">
+      <div class="service-card">
+        <h3>👤 Account Info</h3>
+        <p><strong>Email:</strong> <span id="user-email">Loading...</span></p>
+        <p><strong>Status:</strong> Active</p>
+      </div>
+      <div class="service-card">
+        <h3>💳 Subscription</h3>
+        <p><strong>Plan:</strong> R199/month (Streaming)</p>
+        <p><strong>Next Billing:</strong> 15 Apr 2025</p>
+        <button class="btn btn-outline" id="referral-btn">Get Referral Code (R20 off)</button>
+      </div>
+      <div class="service-card">
+        <h3>📺 Watch Now</h3>
+        <p>Access 300+ live channels and on-demand content.</p>
+        <a href="https://wa.me/27837254362" class="btn btn-primary" target="_blank">Need Help?</a>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-content">
+        <object data="images/logo.svg" type="image/svg+xml" width="160"></object>
+        <p>&copy; 2025 Wiseworx Digital. All rights reserved.</p>
+      </div>
+      <div class="footer-contact">
+        <p>📞 083 725 4362</p>
+        <p>📧 WiseWorks25@gmail.com</p>
+        <p>📍 12027 Mandlekazi Street, Palmridge, JHB</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

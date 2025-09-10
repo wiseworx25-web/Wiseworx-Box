@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Subscribe | Wiseworx</title>
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <header class="header">
+    <div class="container">
+      <div class="logo">
+        <img src="images/logo.png" alt="Wiseworx" width="50" />
+        <h1>Wiseworx Rent-A-Box</h1>
+      </div>
+      <nav class="nav">
+        <a href="index.html">Home</a>
+        <a href="rent.html">Rent a Box</a>
+        <a href="shop.html">Buy TVs</a>
+        <a href="virtual-box.html">Virtual Box</a>
+        <a href="contact.html">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <section class="hero" style="padding:80px 0; text-align:center;">
+    <div class="container">
+      <h2>Subscribe for R199/month</h2>
+      <p class="tagline">Get access to the Virtual Box and stream 300+ channels online.</p>
+    </div>
+  </section>
+
+  <section class="services" style="padding:60px 0;">
+    <div class="container">
+      <div class="service-card" style="max-width:500px; margin:0 auto; text-align:center;">
+        <h3>Monthly Access</h3>
+        <p><strong>R199.00 per month</strong></p>
+        <ul style="text-align:left; margin:20px auto; max-width:400px;">
+          <li>📺 Stream 300+ Live Channels</li>
+          <li>🎥 On-Demand Movies & Shows</li>
+          <li>💻 Watch in Browser – No App</li>
+          <li>🔐 Secure Login</li>
+          <li>🔁 Cancel Anytime</li>
+        </ul>
+
+        <!-- PayFast Button -->
+        <form action="https://www.payfast.co.za/eng/process" method="post" style="margin-top:20px;">
+          <input type="hidden" name="merchant_id" value="YOUR_MERCHANT_ID">
+          <input type="hidden" name="merchant_key" value="YOUR_MERCHANT_KEY">
+          <input type="hidden" name="return_url" value="https://wiseworx.netlify.app/thank-you.html">
+          <input type="hidden" name="cancel_url" value="https://wiseworx.netlify.app/">
+          <input type="hidden" name="notify_url" value="https://yoursite.com/api/payfast-ipn.php">
+          <input type="hidden" name="amount" value="199.00">
+          <input type="hidden" name="item_name" value="Wiseworx Virtual Box Access">
+          <button type="submit" class="btn btn-primary">Pay R199 Now</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-logo">
+        <img src="images/logo.png" alt="Wiseworx Logo" width="40" />
+        <p>&copy; 2025 Wiseworx Rent-A-Box. All rights reserved.</p>
+      </div>
+      <div class="footer-links">
+        <a href="faq.html">FAQ</a>
+        <a href="delivery.html">Delivery</a>
+        <a href="contact.html">Support</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Admin Dashboard | Wiseworx Digital</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+  <style>
+    .admin-container {
+      max-width: 1200px;
+      margin: 40px auto;
+      padding: 20px;
+      background: #121a28;
+      border-radius: 16px;
+      box-shadow: 0 10px 30px rgba(0, 191, 255, 0.1);
+    }
+    .admin-card {
+      background: #0a0e17;
+      padding: 20px;
+      border-radius: 12px;
+      margin-bottom: 20px;
+    }
+    .stream-test {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .channel-btn {
+      padding: 10px 20px;
+      background: #00BFFF;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    .status {
+      padding: 10px;
+      background: #1a2a3a;
+      border-radius: 8px;
+      margin-top: 10px;
+      font-size: 0.9rem;
+    }
+    .user-list {
+      max-height: 300px;
+      overflow-y: auto;
+    }
+    .user-item {
+      padding: 10px;
+      background: #1a2a3a;
+      margin: 5px 0;
+      border-radius: 8px;
+    }
+  </style>
+</head>
+<body>
+
+  <header class="header">
+    <div class="container">
+      <div class="logo">
+        <object data="images/logo.svg" type="image/svg+xml" width="180"></object>
+      </div>
+      <nav class="nav">
+        <a href="index.html">Public Site</a>
+        <a href="admin-dashboard.html" class="active">Admin</a>
+        <a href="#" onclick="logout()" class="logout-btn">Logout</a>
+      </nav>
+    </div>
+  </header>
+
+  <section class="hero" style="padding:80px 0;text-align:center;">
+    <div class="container">
+      <h1>🔐 Admin Dashboard</h1>
+      <p class="tagline">Manage streams, users, and content — full control panel.</p>
+    </div>
+  </section>
+
+  <div class="admin-container">
+    
+    <!-- Stream Tester -->
+    <div class="admin-card">
+      <h3>📡 Live Stream Tester</h3>
+      <p>Click to test any channel</p>
+      <div class="stream-test">
+        <button class="channel-btn" onclick="testStream('SABC 1', 'http://45.155.90.52/live/play/VVU5VWJXOxBTVWx3YzA1aVNqQjZiRE5uY2xvM1oxQm5ZbmxLV0RsdFpFNVdOVFo0ZWxWTGRYVktSVDA9/2541')">SABC 1</button>
+        <button class="channel-btn" onclick="testStream('BBC', 'http://45.155.90.52/live/play/.../1001')">BBC</button>
+        <button class="channel-btn" onclick="testStream('CNN', 'http://45.155.90.52/live/play/.../1002')">CNN</button>
+      </div>
+      <video id="admin-player" controls width="100%" height="500" style="margin-top:20px;"></video>
+      <div id="stream-status" class="status">Select a channel to test.</div>
+    </div>
+
+    <!-- Movie Tester -->
+    <div class="admin-card">
+      <h3>🎬 Movie & Series Tester</h3>
+      <p>Test VOD content (FilmPlus, YouCine)</p>
+      <button class="channel-btn" onclick="testMovie('Movie 1', 'https://cdn.filmplus.tv/movie123/index.m3u8')">Movie 1</button>
+      <button class="channel-btn" onclick="testMovie('Series S1E1', 'https://cdn.filmplus.tv/series/s01e01.m3u8')">Series S1E1</button>
+      <video id="vod-player" controls width="100%" height="500" style="margin-top:20px;"></video>
+    </div>
+
+    <!-- User Management -->
+    <div class="admin-card">
+      <h3>👥 Active Subscribers</h3>
+      <div class="user-list">
+        <div class="user-item">
+          <strong>Email:</strong> user1@gmail.com<br>
+          <strong>Plan:</strong> R199/month • <strong>Status:</strong> Active
+        </div>
+        <div class="user-item">
+          <strong>Email:</strong> user2@yahoo.com<br>
+          <strong>Plan:</strong> R3,000 (Own Box) • <strong>Status:</strong> Active
+        </div>
+      </div>
+    </div>
+
+    <!-- Stream Status Monitor -->
+    <div class="admin-card">
+      <h3>📊 Stream Health Monitor</h3>
+      <div class="status">
+        <strong>SABC 1:</strong> ✅ Online (200 OK)<br>
+        <strong>BBC:</strong> ✅ Online<br>
+        <strong>FilmPlus VOD:</strong> ⚠️ Slow (1.8s latency)<br>
+        <strong>Last Check:</strong> Just now
+      </div>
+    </div>
+
+  </div>
+
+  <footer class="footer">
+    <div class="container">
+      <p>&copy; 2025 Wiseworx Digital. Admin Dashboard.</p>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+  <script>
+    // Admin-only access
+    const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
+    const userRole = localStorage.getItem("userRole");
+
+    if (!isLoggedIn || userRole !== "admin") {
+      alert("Admin access only.");
+      window.location.href = "index.html";
+    }
+
+    function logout() {
+      localStorage.clear();
+      window.location.href = "index.html";
+    }
+
+    function testStream(name, url) {
+      const player = document.getElementById("admin-player");
+      const status = document.getElementById("stream-status");
+      status.textContent = `Loading ${name}...`;
+
+      if (Hls.isSupported()) {
+        const hls = new Hls();
+        hls.loadSource(url);
+        hls.attachMedia(player);
+        hls.on(Hls.Events.MANIFEST_PARSED, () => {
+          player.play();
+          status.textContent = `✅ ${name} is playing.`;
+        });
+        hls.on(Hls.Events.ERROR, () => {
+          status.textContent = `❌ ${name} failed to load.`;
+        });
+      } else {
+        player.src = url;
+        player.addEventListener('loadedmetadata', () => {
+          player.play();
+          status.textContent = `✅ ${name} is playing.`;
+        });
+        player.addEventListener('error', () => {
+          status.textContent = `❌ ${name} failed to load.`;
+        });
+      }
+    }
+
+    function testMovie(name, url) {
+      const player = document.getElementById("vod-player");
+      player.src = url;
+      player.load();
+      player.play().catch(e => console.error("Play error:", e));
+    }
+  </script>
+</body>
+</html>

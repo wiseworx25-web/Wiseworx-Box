@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Wiseworx Digital | Stream Live TV</title>
+  <meta name="description" content="Affordable, global, and reliable streaming. Rent a box, buy a TV, or watch online.">
+
+  <!-- Google Fonts: Poppins -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <!-- Swiper CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
+
+  <!-- Favicon -->
+  <link rel="icon" href="images/logo.svg" type="image/svg+xml" />
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="header">
+    <div class="container">
+      <div class="logo">
+        <object data="images/logo.svg" type="image/svg+xml" width="200"></object>
+      </div>
+      <nav class="nav">
+        <a href="index.html">Home</a>
+        <a href="rent.html">Rent a Box</a>
+        <a href="shop.html">Buy TVs</a>
+        <a href="stream.html">Stream Online</a>
+        <a href="login.html">Login</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="container">
+      <h1>Affordable, Global, and Reliable</h1>
+      <p class="tagline">Stream 300+ live TV channels, movies, and shows from around the world — anytime, anywhere.</p>
+      <div class="hero-buttons">
+        <a href="rent.html" class="btn btn-primary">Rent a Box (R499 Setup)</a>
+        <a href="stream.html" class="btn btn-secondary">Subscribe (R199/month)</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Moving Banners -->
+  <section class="banners">
+    <div class="container">
+      <h2>Featured Movies & Series</h2>
+      <div class="swiper">
+        <div class="swiper-wrapper">
+          <div class="swiper-slide"><img src="images/channels/slide1.png" alt="Movie 1"></div>
+          <div class="swiper-slide"><img src="images/channels/slide2.png" alt="Series 1"></div>
+          <div class="swiper-slide"><img src="images/channels/slide3.png" alt="Movie 2"></div>
+          <div class="swiper-slide"><img src="images/channels/slide4.png" alt="Series 2"></div>
+          <div class="swiper-slide"><img src="images/channels/slide5.png" alt="Movie 3"></div>
+          <div class="swiper-slide"><img src="images/channels/slide6.png" alt="Series 3"></div>
+          <div class="swiper-slide"><img src="images/channels/slide7.png" alt="Movie 4"></div>
+        </div>
+        <div class="swiper-button-next"></div>
+        <div class="swiper-button-prev"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Services -->
+  <section class="services">
+    <div class="container">
+      <div class="service-card">
+        <h3>📦 Rent a Box</h3>
+        <p><strong>R499.99 setup</strong> + R199.99/month from Month 2</p>
+        <p>Delivered & installed nationwide. Cancel anytime.</p>
+        <a href="rent.html" class="btn btn-outline">Learn More</a>
+      </div>
+      <div class="service-card">
+        <h3>🛍️ Buy a Smart TV</h3>
+        <p>32" = R1,600 • 50"+ = R3,500</p>
+        <p>Pre-owned, tested, 1-year warranty.</p>
+        <a href="shop.html" class="btn btn-outline">View TVs</a>
+      </div>
+      <div class="service-card">
+        <h3>💻 Stream Online</h3>
+        <p>R199/month — watch in browser, no box needed</p>
+        <p>Log in & stream on any device.</p>
+        <a href="stream.html" class="btn btn-outline">Subscribe Now</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Get Started -->
+  <section class="get-started">
+    <div class="container">
+      <h3>Get Started Today</h3>
+      <p>Join thousands of users enjoying global entertainment with Wiseworx Digital.</p>
+      <a href="https://wa.me/27837254362" class="btn btn-primary" target="_blank">WhatsApp Us</a>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-content">
+        <object data="images/logo.svg" type="image/svg+xml" width="160"></object>
+        <p>Providing affordable, global, and reliable digital TV to families worldwide.</p>
+      </div>
+      <div class="footer-contact">
+        <h4>Contact Us</h4>
+        <p>📞 083 725 4362</p>
+        <p>📧 Wiseworx25@gmail.com</p>
+        <p>📍 12027 Mandlekazi Street, Palmridge, JHB</p>
+        <a href="https://wa.me/27837254362" class="btn btn-small" target="_blank">Chat on WhatsApp</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2025 Wiseworx Digital. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <!-- Swiper JS -->
+  <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+  <script>
+    new Swiper('.swiper', {
+      loop: true,
+      navigation: {
+        nextEl: '.swiper-button-next',
+        prevEl: '.swiper-button-prev',
+      },
+      autoplay: {
+        delay: 3000,
+      },
+      slidesPerView: 2,
+      spaceBetween: 20,
+      breakpoints: {
+        768: { slidesPerView: 4 },
+        1024: { slidesPerView: 6 }
+      }
+    });
+  </script>
+</body>
+</html>
