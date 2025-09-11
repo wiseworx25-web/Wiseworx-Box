@@ -3,21 +3,42 @@
 <head>
   <meta charset="UTF-8" />
   <title>Movies | Wiseworx Digital</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
-  <header class="header">...</header>
+
+  <header class="header">
+    <div class="container">
+      <div class="logo">
+        <object data="images/logo.svg" type="image/svg+xml" width="180"></object>
+      </div>
+      <nav class="nav">
+        <a href="index.html">Home</a>
+        <a href="rent.html">Rent a Box</a>
+        <a href="shop.html">Buy TVs</a>
+        <a href="stream.html">Stream Online</a>
+        <a href="login.html">Login</a>
+      </nav>
+    </div>
+  </header>
 
   <section class="hero" style="text-align:center;">
-    <h1>🎬 Movies from FilmPlus</h1>
-    <p>Watch on-demand movies directly in your browser.</p>
+    <div class="container">
+      <h1>🎬 Movies from FilmPlus</h1>
+      <p class="tagline">Watch on-demand movies directly in your browser.</p>
+    </div>
   </section>
 
   <section class="services">
     <div class="container">
       <div class="service-card">
         <h3>🎥 Movie 1</h3>
-        <button onclick="playMovie('REPLACE_WITH_FILMPLUS_URL')" class="btn btn-primary">Watch Now</button>
+        <button onclick="playMovie('https://cdn.filmplus.tv/movie123/index.m3u8')" class="btn btn-primary">Watch Now</button>
+      </div>
+      <div class="service-card">
+        <h3>🎥 Series S1E1</h3>
+        <button onclick="playMovie('https://cdn.filmplus.tv/series/s01e01.m3u8')" class="btn btn-primary">Watch Now</button>
       </div>
     </div>
   </section>
@@ -25,8 +46,16 @@
   <video-js id="vod-player" controls width="100%" height="500" class="vjs-default-skin"></video-js>
 
   <script src="https://vjs.zencdn.net/8.0.4/video.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
   <script>
     function playMovie(url) {
+      const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
+      if (!isLoggedIn) {
+        alert("Please log in to watch movies.");
+        window.location.href = "login.html";
+        return;
+      }
+
       const player = videojs('vod-player');
       player.src({ src: url, type: 'application/x-mpegURL' });
       player.play();
