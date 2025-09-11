@@ -1,0 +1,10 @@
+[
+  {
+    "title": "Movie 1",
+    "url": "https://cdn.filmplus.tv/movie123/index.m3u8"
+  },
+  {
+    "title": "Series S1E1",
+    "url": "https://cdn.filmplus.tv/series/s01e01.m3u8"
+  }
+]
