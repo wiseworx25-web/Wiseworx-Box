@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Admin | Stream Tester</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap" rel="stylesheet" />
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: #0a0e17;
+      color: #e0e6f2;
+      margin: 0;
+      padding: 0;
+    }
+    .container {
+      width: 90%;
+      max-width: 1200px;
+      margin: 40px auto;
+    }
+    header {
+      padding: 20px;
+      background: #121a28;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .logo { font-size: 1.5rem; color: #00BFFF; }
+    nav a { color: white; margin-left: 20px; text-decoration: none; }
+
+    .section {
+      background: #121a28;
+      padding: 30px;
+      border-radius: 16px;
+      margin-top: 30px;
+    }
+    h2 { color: #6EC1E4; }
+    input[type="text"] {
+      width: 100%;
+      padding: 12px;
+      border-radius: 8px;
+      border: 1px solid #45B7D1;
+      background: #0a0e17;
+      color: white;
+      margin-bottom: 20px;
+    }
+    button {
+      padding: 12px 24px;
+      background: #00BFFF;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    video-js {
+      margin-top: 20px;
+      border-radius: 12px;
+      overflow: hidden;
+    }
+    .saved-list {
+      margin-top: 30px;
+    }
+    .saved-item {
+      padding: 10px;
+      background: #1a2a3a;
+      margin: 5px 0;
+      border-radius: 8px;
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="logo">🔐 Wiseworx Admin</div>
+    <nav>
+      <a href="admin-dashboard.html">Dashboard</a>
+      <a href="admin-streams.html">Stream Tester</a>
+      <a href="#" onclick="logout()">Logout</a>
+    </nav>
+  </header>
+
+  <div class="container">
+    <section class="section">
+      <h2>🎥 Stream URL Tester</h2>
+      <p>Enter any .m3u8 or video link to test playback.</p>
+      <input type="text" id="streamUrl" placeholder="https://cdn.filmplus.tv/movie123/index.m3u8" />
+      <button onclick="testStream()">Test Stream</button>
+
+      <video-js id="admin-player" controls width="100%" height="500" class="vjs-default-skin"></video-js>
+
+      <div class="saved-list">
+        <h3>Saved Working Streams</h3>
+        <div id="savedStreams">
+          <!-- Will be filled by JS -->
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- Video.js -->
+  <script src="https://vjs.zencdn.net/8.0.4/video.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+
+  <script>
+    // Admin-only access
+    const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
+    const userRole = localStorage.getItem("userRole");
+    
+    if (!isLoggedIn || userRole !== "admin") {
+      alert("Admin access only.");
+      window.location.href = "../index.html";
+    }
+
+    function logout() {
+      localStorage.clear();
+      window.location.href = "../index.html";
+    }
+
+    let player;
+
+    function testStream() {
+      const url = document.getElementById("streamUrl").value.trim();
+      if (!url) return alert("Please enter a stream URL");
+
+      // Destroy previous player
+      if (player) player.dispose();
+
+      player = videojs('admin-player', {
+        controls: true,
+        autoplay: false,
+        preload: 'auto'
+      });
+
+      // Check if HLS is supported
+      if (Hls.isSupported()) {
+        const hls = new Hls();
+        hls.loadSource(url);
+        hls.attachMedia(player.tech({ IWillNotUseInsecureEndpoints: false }).el());
+        
+        hls.on(Hls.Events.MANIFEST_PARSED, () => {
+          console.log("Manifest loaded, now playing...");
+          player.play();
+        });
+
+        hls.on(Hls.Events.ERROR, (event, data) => {
+          console.error("HLS Error:", data);
+          alert("Error loading stream. Check URL or connection.");
+        });
+      } else {
+        player.src({ src: url, type: 'application/x-mpegURL' });
+        player.ready(() => {
+          player.play().catch(e => {
+            console.error("Play error:", e);
+            alert("Failed to play. Is this a valid HLS stream?");
+          });
+        });
+      }
+    }
+
+    // Load saved streams
+    function loadSavedStreams() {
+      const saved = JSON.parse(localStorage.getItem("savedStreams") || "[]");
+      const container = document.getElementById("savedStreams");
+      container.innerHTML = "";
+
+      saved.forEach((item, index) => {
+        const div = document.createElement("div");
+        div.className = "saved-item";
+        div.innerHTML = `
+          <strong>${item.name}</strong><br>
+          <small>${item.url}</small><br>
+          <button onclick="playSaved('${item.url}')">▶️ Play</button>
+          <button onclick="removeSaved(${index})">🗑️ Delete</button>
+        `;
+        container.appendChild(div);
+      });
+    }
+
+    function playSaved(url) {
+      document.getElementById("streamUrl").value = url;
+      testStream();
+    }
+
+    function removeSaved(index) {
+      const saved = JSON.parse(localStorage.getItem("savedStreams") || "[]");
+      saved.splice(index, 1);
+      localStorage.setItem("savedStreams", JSON.stringify(saved));
+      loadSavedStreams();
+    }
+
+    // Save current stream
+    window.addEventListener("load", loadSavedStreams);
+
+    // Add shortcut: Ctrl+S to save
+    document.addEventListener("keydown", (e) => {
+      if (e.ctrlKey && e.key === "s") {
+        e.preventDefault();
+        const url = document.getElementById("streamUrl").value.trim();
+        if (!url) return alert("No URL to save");
+        const name = prompt("Enter a name for this stream:");
+        if (!name) return;
+
+        const saved = JSON.parse(localStorage.getItem("savedStreams") || "[]");
+        saved.push({ name, url });
+        localStorage.setItem("savedStreams", JSON.stringify(saved));
+        loadSavedStreams();
+        alert(`✅ "${name}" saved!`);
+      }
+    });
+  </script>
+</body>
+</html>
